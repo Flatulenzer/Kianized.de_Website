@@ -2,21 +2,282 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Impressum</title>
+  <title>KIANIZED</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body {
-      background-color: #000;
+    html, body {
       margin: 0;
-      text-align: center;
+      padding: 0;
+      background-color: #000;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Arial Black', sans-serif;
     }
-    img {
-      max-width: 100%;
-      height: auto;
-      margin-top: 2rem;
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      position: relative;
+    }
+
+    .kianized {
+      font-size: 10vw;
+      color: #7a42b3;
+      transform: scale(0.05);
+      opacity: 0;
+      position: relative;
+      z-index: 1;
+      animation: zoomIn 1.2s ease-out forwards;
+      cursor: default;
+      --x: 50%;
+      --y: 50%;
+    }
+
+    .kianized::before {
+      content: 'KIANIZED';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: #e2b8ff;
+      background: linear-gradient(90deg, transparent 40%, #e2b8ff 50%, transparent 60%);
+      background-size: 230% 100%;
+      background-repeat: no-repeat;
+      background-position: 100% center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 1;
+      z-index: 2;
+      pointer-events: none;
+      animation: pingpongWave 4s infinite linear;
+    }
+
+    .kianized.hovered::before {
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), #e2b8ff 15%, rgba(255,255,255,0) 40%);
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      animation: none;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes zoomIn {
+      0% { transform: scale(0.05); opacity: 0; }
+      40% { transform: scale(1.2); opacity: 1; }
+      50% { transform: scale(1); }
+      55%, 57%, 59%, 61%, 63%, 65%, 67%, 69%, 71%, 73% {
+        transform: scale(1.04);
+      }
+      56%, 58%, 60%, 62%, 64%, 66%, 68%, 70%, 72%, 74% {
+        transform: scale(0.96);
+      }
+      75%, 100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes pingpongWave {
+      0%   { background-position: 100% center; }
+      50%  { background-position: 0% center; }
+      100% { background-position: 100% center; }
+    }
+
+    .loading, .else {
+      font-size: 2vw;
+      margin-top: 1rem;
+      color: #d8b5ff;
+    }
+
+    .loading {
+      opacity: 0;
+      color: #7a42b3;
+      animation: strongPulse 2s 2.2s ease-in-out infinite, fadeIn 1s 2.2s forwards;
+    }
+
+    .else {
+      display: none;
+      opacity: 0;
+      color: #7a42b3;
+      animation: fadeIn 1s forwards;
+    }
+
+    @keyframes strongPulse {
+      0%, 100% { opacity: 0.3; transform: scale(0.95); }
+      50%      { opacity: 1; transform: scale(1.05); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .footer-links {
+      position: absolute;
+      bottom: 1vh;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 2vw;
+      font-size: 0.9vw;
+      opacity: 0.6;
+      z-index: 10;
+    }
+
+    .footer-links a {
+      color: #a678f0;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    .cookie-banner {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      color: #ccc;
+      text-align: center;
+      padding: 1em;
+      font-size: 0.9em;
+      z-index: 999;
+      display: none;
+    }
+
+    .cookie-banner a {
+      color: #a678f0;
+      text-decoration: underline;
+    }
+
+    .cookie-banner button {
+      margin-left: 1em;
+      background-color: #7a42b3;
+      color: white;
+      border: none;
+      padding: 0.4em 1em;
+      cursor: pointer;
+      border-radius: 4px;
     }
   </style>
 </head>
 <body>
-  <img src="impressum.jpg" alt="Impressum">
+  <div class="container">
+    <div class="kianized" id="kianized">KIANIZED</div>
+    <div class="loading" id="loadingText">Loading...</div>
+    <div class="else" id="elseText">„Wenn’s geil wird – umso besser.“</div>
+  </div>
+
+  <div class="footer-links">
+    <a href="philosophie.html">Unsere Philosophie</a>
+    <a href="datenschutz.html">Datenschutz</a>
+    <a href="impressum.html">Impressum</a>
+  </div>
+
+  <!-- Cookie-Banner -->
+  <div class="cookie-banner" id="cookieBanner">
+    Diese Website verwendet Cookies. Durch die Nutzung dieser Seite erklären Sie sich damit einverstanden.
+    <a href="datenschutz.html">Mehr erfahren</a>
+    <button onclick="acceptCookies()">OK</button>
+  </div>
+
+  <script>
+    // Ladeanimation ausblenden
+    setTimeout(() => {
+      document.getElementById('loadingText').style.display = 'none';
+      document.getElementById('elseText').style.display = 'block';
+    }, 6000);
+
+    // TypeMorph-Effekt
+    const kianized = document.getElementById('kianized');
+    const elseText = document.getElementById('elseText');
+    const originalText = '„Wenn’s geil wird – umso besser.“';
+    const hoverText = '„Ist kein Laden. Es ist ein Zustand.“';
+
+    let morphInterval;
+    let currentText = originalText;
+
+    function typeMorph(from, to) {
+      clearInterval(morphInterval);
+      const maxLength = Math.max(from.length, to.length);
+      let index = 0;
+      morphInterval = setInterval(() => {
+        if (index <= maxLength) {
+          const left = to.substring(0, index);
+          const right = from.substring(index);
+          elseText.textContent = left + right;
+          index++;
+        } else {
+          currentText = to;
+          clearInterval(morphInterval);
+        }
+      }, 50);
+    }
+
+    function updateSpotlight(x, y) {
+      kianized.style.setProperty('--x', `${x}%`);
+      kianized.style.setProperty('--y', `${y}%`);
+    }
+
+    function enableSpotlight() {
+      kianized.classList.add('hovered');
+    }
+
+    function disableSpotlight() {
+      kianized.classList.remove('hovered');
+    }
+
+    kianized.addEventListener('mousemove', (e) => {
+      const rect = kianized.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      updateSpotlight(x, y);
+      enableSpotlight();
+    });
+
+    kianized.addEventListener('mouseleave', () => {
+      disableSpotlight();
+      if (currentText !== originalText) typeMorph(hoverText, originalText);
+    });
+
+    kianized.addEventListener('mouseenter', () => {
+      if (currentText !== hoverText) typeMorph(originalText, hoverText);
+    });
+
+    kianized.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const rect = kianized.getBoundingClientRect();
+        const x = ((touch.clientX - rect.left) / rect.width) * 100;
+        const y = ((touch.clientY - rect.top) / rect.height) * 100;
+        updateSpotlight(x, y);
+        enableSpotlight();
+      }
+    });
+
+    kianized.addEventListener('click', () => {
+      if (currentText === originalText) {
+        typeMorph(originalText, hoverText);
+      } else {
+        typeMorph(hoverText, originalText);
+      }
+    });
+
+    // Cookie-Banner Logik
+    function acceptCookies() {
+      localStorage.setItem('cookiesAccepted', 'true');
+      document.getElementById('cookieBanner').style.display = 'none';
+    }
+
+    window.addEventListener('load', () => {
+      if (!localStorage.getItem('cookiesAccepted')) {
+        document.getElementById('cookieBanner').style.display = 'block';
+      }
+    });
+  </script>
 </body>
 </html>
