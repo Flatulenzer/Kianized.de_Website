@@ -2,8 +2,8 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>KIANIZED</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KIANIZED</title>
   <style>
     html, body {
       margin: 0;
@@ -17,14 +17,19 @@
     .container {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       flex-direction: column;
       height: 100vh;
+      padding-top: 5vh;
+      padding-left: 5vw;
+      padding-right: 5vw;
+      box-sizing: border-box;
       position: relative;
+      text-align: center;
     }
 
     .kianized {
-      font-size: 12vw;
+      font-size: calc(10vw + 2vh);
       color: #7a42b3;
       transform: scale(0.05);
       opacity: 0;
@@ -32,8 +37,8 @@
       z-index: 1;
       animation: zoomIn 1.2s ease-out forwards;
       cursor: default;
-      --x: 50%;
-      --y: 50%;
+      width: 100%;
+      text-align: center;
     }
 
     .kianized::before {
@@ -43,7 +48,6 @@
       left: 0;
       width: 100%;
       height: 100%;
-      color: #e2b8ff;
       background: linear-gradient(90deg, transparent 40%, #e2b8ff 50%, transparent 60%);
       background-size: 230% 100%;
       background-repeat: no-repeat;
@@ -62,18 +66,14 @@
       background-repeat: no-repeat;
       background-position: center;
       animation: none;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     @keyframes zoomIn {
       0% { transform: scale(0.05); opacity: 0; }
       40% { transform: scale(1.2); opacity: 1; }
       50% { transform: scale(1); }
-      55%, 57%, 59%, 61%, 63%, 65%, 67%, 69%, 71%, 73% {
-        transform: scale(1.04);
-      }
-      56%, 58%, 60%, 62%, 64%, 66%, 68%, 70%, 72%, 74% {
-        transform: scale(0.96);
-      }
       75%, 100% { transform: scale(1); opacity: 1; }
     }
 
@@ -84,11 +84,11 @@
     }
 
     .loading, .else {
-      font-size: 4vw;
+      font-size: calc(3vw + 1vh);
       margin-top: 1rem;
       color: #d8b5ff;
       text-align: center;
-      max-width: 90vw;
+      width: 100%;
     }
 
     .loading {
@@ -120,8 +120,9 @@
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 6vw;
-      font-size: 3.2vw;
+      flex-wrap: wrap;
+      gap: 4vw;
+      font-size: 4vw;
       opacity: 0.6;
       z-index: 10;
     }
@@ -151,7 +152,6 @@
   </div>
 
   <script>
-    // Ladeanimation ausblenden
     setTimeout(() => {
       document.getElementById('loadingText').style.display = 'none';
       document.getElementById('elseText').style.display = 'block';
@@ -213,14 +213,11 @@
     });
 
     kianized.addEventListener('touchstart', (e) => {
-      if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        const rect = kianized.getBoundingClientRect();
-        const x = ((touch.clientX - rect.left) / rect.width) * 100;
-        const y = ((touch.clientY - rect.top) / rect.height) * 100;
-        updateSpotlight(x, y);
-        enableSpotlight();
-      }
+      const rect = kianized.getBoundingClientRect();
+      const x = ((e.touches[0].clientX - rect.left) / rect.width) * 100;
+      const y = ((e.touches[0].clientY - rect.top) / rect.height) * 100;
+      updateSpotlight(x, y);
+      enableSpotlight();
       if (currentText === originalText) {
         typeMorph(originalText, hoverText);
       } else {
