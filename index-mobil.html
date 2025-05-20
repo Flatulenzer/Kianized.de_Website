@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KIANIZED</title>
   <style>
-    /* === Globales Grundlayout === */
     html, body {
       margin: 0;
       padding: 0;
@@ -27,9 +26,8 @@
       text-align: center;
     }
 
-    /* === Hauptlogo: KIANIZED === */
     .kianized {
-      font-size: 20vw; /* Dominante Logo-Schriftgroße */
+      font-size: 20vw;
       color: #7a42b3;
       transform: scale(0.05);
       opacity: 0;
@@ -37,9 +35,7 @@
       animation: zoomIn 1.2s ease-out forwards;
       cursor: default;
       position: relative;
-      margin-top: -34vw; /* Nach oben verschoben */
-      --x: 50%;
-      --y: 50%;
+      margin-top: -34vw;
     }
 
     .kianized::before {
@@ -60,16 +56,6 @@
       animation: pingpongWave 4s infinite linear;
     }
 
-    .kianized.hovered::before {
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), #e2b8ff 15%, rgba(255,255,255,0) 40%);
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      animation: none;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
     @keyframes zoomIn {
       0% { transform: scale(0.05); opacity: 0; }
       40% { transform: scale(1.2); opacity: 1; }
@@ -83,9 +69,8 @@
       100% { background-position: 100% center; }
     }
 
-    /* === Spruch unter KIANIZED === */
     .loading, .else {
-      font-size: 5.4vw; /* Start-Schriftgröße, wird dynamisch angepasst */
+      font-size: 5.4vw;
       white-space: nowrap;
       overflow: hidden;
       text-align: center;
@@ -114,7 +99,6 @@
       to   { opacity: 1; }
     }
 
-    /* === Mittlerer Footer-Link === */
     .footer-middle {
       position: absolute;
       bottom: 6vh;
@@ -130,7 +114,6 @@
       text-decoration: none;
     }
 
-    /* === Footer links & rechts unten === */
     .footer-bottom {
       position: absolute;
       bottom: 1vh;
@@ -156,25 +139,21 @@
     <div class="else" id="elseText">„Wenn’s geil wird – umso besser.“</div>
   </div>
 
-  <!-- Mittlerer zentrierter Footer-Link -->
   <div class="footer-middle">
     <a href="philosophie.html">Unsere<br>Philosophie</a>
   </div>
 
-  <!-- Linker und rechter Pflichtlink -->
   <div class="footer-bottom">
     <a href="datenschutz.html">Datenschutz</a>
     <a href="impressum.html">Impressum</a>
   </div>
 
   <script>
-    // === Dynamische Anzeige des Spruchs nach dem Ladeeffekt ===
     setTimeout(() => {
       document.getElementById('loadingText').style.display = 'none';
       document.getElementById('elseText').style.display = 'inline-block';
     }, 6000);
 
-    // === Spruch-Switch Hover/Touch ===
     const kianized = document.getElementById('kianized');
     const elseText = document.getElementById('elseText');
     const originalText = '„Wenn’s geil wird – umso besser.“';
@@ -200,43 +179,15 @@
       }, 50);
     }
 
-    // === Taschenlampen-Effekt (Spotlight) ===
-    function updateSpotlight(x, y) {
-      kianized.style.setProperty('--x', `${x}%`);
-      kianized.style.setProperty('--y', `${y}%`);
-    }
-
-    function enableSpotlight() {
-      kianized.classList.add('hovered');
-    }
-
-    function disableSpotlight() {
-      kianized.classList.remove('hovered');
-    }
-
-    kianized.addEventListener('mousemove', (e) => {
-      const rect = kianized.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      updateSpotlight(x, y);
-      enableSpotlight();
-    });
-
-    kianized.addEventListener('mouseleave', () => {
-      disableSpotlight();
-      if (currentText !== originalText) typeMorph(hoverText, originalText);
-    });
-
     kianized.addEventListener('mouseenter', () => {
       if (currentText !== hoverText) typeMorph(originalText, hoverText);
     });
 
-    kianized.addEventListener('touchstart', (e) => {
-      const rect = kianized.getBoundingClientRect();
-      const x = ((e.touches[0].clientX - rect.left) / rect.width) * 100;
-      const y = ((e.touches[0].clientY - rect.top) / rect.height) * 100;
-      updateSpotlight(x, y);
-      enableSpotlight();
+    kianized.addEventListener('mouseleave', () => {
+      if (currentText !== originalText) typeMorph(hoverText, originalText);
+    });
+
+    kianized.addEventListener('touchstart', () => {
       if (currentText === originalText) {
         typeMorph(originalText, hoverText);
       } else {
@@ -244,11 +195,6 @@
       }
     });
 
-    kianized.addEventListener('touchend', () => {
-      disableSpotlight();
-    });
-
-    // === Responsive Verhalten: Hochformat fix, Querformat scrollt ===
     function adjustContainerHeight() {
       const container = document.querySelector('.container');
       if (window.innerHeight > window.innerWidth) {
@@ -261,14 +207,11 @@
     window.addEventListener('load', adjustContainerHeight);
     window.addEventListener('resize', adjustContainerHeight);
 
-    // === Dynamische Anpassung der Schriftgröße für den Spruch ===
     function fitSpruch() {
       const spruch = document.getElementById('elseText');
-      const maxWidth = window.innerWidth * 0.84; // 84vw
-      let fontSize = 5.4; // Startwert in vw
-
+      const maxWidth = window.innerWidth * 0.84;
+      let fontSize = 5.4;
       spruch.style.fontSize = fontSize + 'vw';
-
       while (spruch.offsetWidth > maxWidth && fontSize > 2.5) {
         fontSize -= 0.1;
         spruch.style.fontSize = fontSize + 'vw';
