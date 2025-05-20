@@ -27,7 +27,7 @@
     }
 
     .kianized {
-      font-size: 12vw;
+      font-size: 14vw;
       color: #7a42b3;
       transform: scale(0.05);
       opacity: 0;
@@ -35,6 +35,7 @@
       animation: zoomIn 1.2s ease-out forwards;
       cursor: default;
       position: relative;
+      margin-top: -18vw;
       --x: 50%;
       --y: 50%;
     }
@@ -81,16 +82,19 @@
     }
 
     .loading, .else {
-      font-size: 8vw;
+      font-size: 6vw;
       margin-top: 1rem;
-      color: #d8b5ff;
+      color: #7a42b3;
       text-align: center;
       width: 100%;
+      max-width: 65vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .loading {
       opacity: 0;
-      color: #7a42b3;
       animation: strongPulse 2s 2.2s ease-in-out infinite, fadeIn 1s 2.2s forwards;
     }
 
@@ -115,8 +119,9 @@
       bottom: 6vh;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 6vw;
+      font-size: 5vw;
       opacity: 0.6;
+      text-align: center;
     }
 
     .footer-middle a {
@@ -150,7 +155,7 @@
   </div>
 
   <div class="footer-middle">
-    <a href="philosophie.html">Unsere Philosophie</a>
+    <a href="philosophie.html">Unsere<br>Philosophie</a>
   </div>
 
   <div class="footer-bottom">
@@ -236,7 +241,6 @@
       disableSpotlight();
     });
 
-    // Dynamische Höhe je nach Ausrichtung
     function adjustContainerHeight() {
       const container = document.querySelector('.container');
       if (window.innerHeight > window.innerWidth) {
