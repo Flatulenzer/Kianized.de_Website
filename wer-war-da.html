@@ -3,39 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wer war da? – KIANIZED</title>
+  <title>Wer war da?</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
       background-color: #000;
       color: #a678f0;
-      font-family: 'Arial Black', sans-serif;
+      font-family: 'Arial', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
       text-align: center;
+    }
+    .content {
       font-size: 6vw;
     }
   </style>
 </head>
 <body>
-
-  <div id="seitenzaehler">Lade Seitenaufrufe...</div>
+  <div class="content" id="counterDisplay">Zähler wird geladen...</div>
 
   <script>
-    fetch('https://counter.dev/data/cbfd408e-94d1-4122-bf92-c4aac5966aef.json')
-      .then(response => response.json())
-      .then(data => {
-        const count = data.total;
-        document.getElementById('seitenzaehler').textContent =
-          'Seitenaufrufe insgesamt: ' + count;
+    // Zählerdaten von counter.dev abrufen
+    fetch("https://counter.dev/api/cbfd408e-94d1-4122-bf92-c4aac5966aef")
+      .then(response => {
+        if (!response.ok) throw new Error("Antwortstatus: " + response.status);
+        return response.json();
       })
-      .catch(() => {
-        document.getElementById('seitenzaehler').textContent =
-          'Zähler nicht verfügbar.';
+      .then(data => {
+        const count = data.total || data.count || 0;
+        document.getElementById("counterDisplay").textContent = `Besuche insgesamt: ${count}`;
+      })
+      .catch(error => {
+        console.error("Fehler beim Abrufen des Zählerstandes:", error);
+        document.getElementById("counterDisplay").textContent = "Zähler nicht verfügbar.";
       });
   </script>
-
 </body>
 </html>
