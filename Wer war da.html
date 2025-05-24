@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wer war da?</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 2vh 5vw;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #a678f0;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 7vw;
+      margin-bottom: 4vh;
+      color: #7a42b3;
+    }
+
+    .country {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2vh;
+    }
+
+    .flag {
+      font-size: 5vw;
+      margin-right: 2vw;
+      width: 12vw;
+      text-align: right;
+    }
+
+    .bar {
+      height: 2vh;
+      background-color: #7a42b3;
+      flex-grow: 1;
+      border-radius: 1vh;
+    }
+
+    .count {
+      margin-left: 2vw;
+      min-width: 3ch;
+      text-align: left;
+    }
+
+    @media (min-width: 800px) {
+      h1 { font-size: 3vw; }
+      .flag { font-size: 2vw; width: 6vw; }
+      .bar { height: 1.5vh; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Wer war da?</h1>
+
+  <div id="stats"></div>
+
+  <script data-goatcounter="https://kianized.goatcounter.com/count"
+          async src="https://gc.zgo.at/count.js"></script>
+
+  <script>
+    const statsContainer = document.getElementById('stats');
+
+    // Länder-Flaggen generieren aus Ländercode
+    function countryFlag(code) {
+      if (!code || code.length !== 2) return code;
+      const offset = 127397;
+      return String.fromCodePoint(...[...code.toUpperCase()].map(c => c.charCodeAt() + offset));
+    }
+
+    fetch('https://kianized.goatcounter.com/api/v0/stats/by-country.json')
+      .then(res => res.json())
+      .then(data => {
+        const max = Math.max(...data.map(e => e.count));
+        data.forEach(entry => {
+          const div = document.createElement('div');
+          div.className = 'country';
+
+          const flag = document.createElement('div');
+          flag.className = 'flag';
+          flag.textContent = countryFlag(entry.code);
+
+          const bar = document.createElement('div');
+          bar.className = 'bar';
+          bar.style.width = (entry.count / max * 100) + '%';
+
+          const count = document.createElement('div');
+          count.className = 'count';
+          count.textContent = '(' + entry.count + ')';
+
+          div.appendChild(flag);
+          div.appendChild(bar);
+          div.appendChild(count);
+          statsContainer.appendChild(div);
+        });
+      })
+      .catch(err => {
+        statsContainer.textContent = 'Keine Besucherdaten gefunden oder API nicht erreichbar.';
+      });
+  </script>
+</body>
+</html>
