@@ -114,26 +114,39 @@
       to   { opacity: 1; }
     }
 
-    .footer-links {
+    .footer-top {
       position: absolute;
-      bottom: 1vh;
+      bottom: 6vh;
       left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      gap: 2vw;
+      text-align: center;
       font-size: 0.9vw;
+      line-height: 1.8;
       opacity: 0.6;
-      z-index: 10;
     }
 
-    .footer-links a {
+    .footer-top a {
+      display: block;
       color: #a678f0;
       text-decoration: none;
-      transition: opacity 0.3s ease;
+      margin-bottom: 1vh;
     }
 
-    .footer-links a:hover {
-      opacity: 1;
+    .footer-bottom {
+      position: absolute;
+      bottom: 1vh;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 5vw;
+      font-size: 0.9vw;
+      opacity: 0.6;
+    }
+
+    .footer-bottom a {
+      color: #a678f0;
+      text-decoration: none;
     }
 
     .cookie-banner {
@@ -172,8 +185,12 @@
     <div class="else" id="elseText">„Wenn’s geil wird – umso besser.“</div>
   </div>
 
-  <div class="footer-links">
+  <div class="footer-top">
     <a href="philosophie.html">Unsere Philosophie</a>
+    <a href="wer-war-da.html">Wer war da?</a>
+  </div>
+
+  <div class="footer-bottom">
     <a href="datenschutz.html">Datenschutz</a>
     <a href="impressum.html">Impressum</a>
   </div>
@@ -192,7 +209,6 @@
       document.getElementById('elseText').style.display = 'block';
     }, 6000);
 
-    // TypeMorph-Effekt
     const kianized = document.getElementById('kianized');
     const elseText = document.getElementById('elseText');
     const originalText = '„Wenn’s geil wird – umso besser.“';
