@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Besucherzähler – KIANIZED</title>
-  <script data-goatcounter="https://kianized.goatcounter.com/count"
-          async src="https://gc.zgo.at/count.js"></script>
+  <title>Wer war da? – KIANIZED</title>
   <style>
     body {
       background-color: #000;
@@ -16,12 +14,28 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      font-size: 6vw;
       text-align: center;
+      font-size: 6vw;
     }
   </style>
 </head>
 <body>
-  Diese Seite wurde gezählt.
+
+  <div id="seitenzaehler">Lade Seitenaufrufe...</div>
+
+  <script>
+    fetch('https://counter.dev/data/cbfd408e-94d1-4122-bf92-c4aac5966aef.json')
+      .then(response => response.json())
+      .then(data => {
+        const count = data.total;
+        document.getElementById('seitenzaehler').textContent =
+          'Seitenaufrufe insgesamt: ' + count;
+      })
+      .catch(() => {
+        document.getElementById('seitenzaehler').textContent =
+          'Zähler nicht verfügbar.';
+      });
+  </script>
+
 </body>
 </html>
