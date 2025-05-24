@@ -56,7 +56,7 @@
   <h1>Wer war da?</h1>
   <div id="output">Lade Besucherdaten...</div>
   <div class="info">
-    Datenquelle: <code>by-country.json</code> via GoatCounter<br>
+    Datenquelle: <code>locations.json</code> via GoatCounter<br>
     DSGVO-konform, ohne Cookies oder IP-Speicherung
   </div>
 
@@ -74,7 +74,7 @@
       "ES": "🇪🇸"
     };
 
-    fetch("https://kianized.goatcounter.com/api/v0/stats/by-country.json")
+    fetch("https://kianized.goatcounter.com/api/v0/stats/locations.json")
       .then(response => response.json())
       .then(data => {
         const container = document.getElementById("output");
@@ -88,14 +88,15 @@
         const max = Math.max(...data.map(d => d.count));
 
         data.forEach(entry => {
+          const code = entry.location.toUpperCase();
+          const flag = FLAGS[code] || "🌍";
+
           const row = document.createElement("div");
           row.className = "country";
 
-          const flag = FLAGS[entry.country] || "🌍";
-
           row.innerHTML = `
             <span class="flag">${flag}</span>
-            <span>${entry.country}</span>
+            <span>${code}</span>
             <div class="bar" style="width: ${Math.round(entry.count / max * 60)}vw;"></div>
             <span class="count">${entry.count}</span>
           `;
