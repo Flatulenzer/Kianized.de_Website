@@ -3,43 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wer war da?</title>
+  <title>Wer war da? – KIANIZED</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
       background-color: #000;
       color: #a678f0;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Arial Black', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       height: 100vh;
+      margin: 0;
       text-align: center;
     }
-    .content {
-      font-size: 6vw;
+
+    h1 {
+      font-size: 10vw;
+      margin-bottom: 2vh;
+    }
+
+    .counter-box {
+      font-size: 5vw;
+      line-height: 1.8;
+      color: #a678f0;
+    }
+
+    .zurueck-button {
+      position: fixed;
+      top: 1.5vh;
+      left: 2vw;
+      width: 2.6em;
+      height: 2.6em;
+      border-radius: 50%;
+      background-color: #7a42b3;
+      opacity: 0.75;
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      z-index: 100;
+    }
+
+    .zurueck-button:hover {
+      opacity: 1;
+    }
+
+    .zurueck-button svg {
+      width: 1.4em;
+      height: 1.4em;
+      fill: white;
     }
   </style>
 </head>
 <body>
-  <div class="content" id="counterDisplay">Zähler wird geladen...</div>
 
-  <script>
-    // Zählerdaten von counter.dev abrufen
-    fetch("https://counter.dev/api/cbfd408e-94d1-4122-bf92-c4aac5966aef")
-      .then(response => {
-        if (!response.ok) throw new Error("Antwortstatus: " + response.status);
-        return response.json();
-      })
-      .then(data => {
-        const count = data.total || data.count || 0;
-        document.getElementById("counterDisplay").textContent = `Besuche insgesamt: ${count}`;
-      })
-      .catch(error => {
-        console.error("Fehler beim Abrufen des Zählerstandes:", error);
-        document.getElementById("counterDisplay").textContent = "Zähler nicht verfügbar.";
-      });
-  </script>
+<!-- Zurück-Button -->
+<a href="index.html" class="zurueck-button" title="Zurück zur Startseite">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="15 18 9 12 15 6" />
+  </svg>
+</a>
+
+<h1>Wer war da?</h1>
+<div class="counter-box">
+  Aktuell online: <span class="BZonline">x</span><br>
+  Besucher heute: <span class="BZheute">x</span><br>
+  Besucher gestern: <span class="BZgestern">x</span><br>
+  Besucher gesamt: <span class="BZgesamt">x</span><br>
+  Besucher seit: 24.05.2025
+</div>
+
+<!-- Besucherzähler-Skript -->
+<script language="JavaScript" src="https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=kianized.de&start=0&design=6"></script>
+
 </body>
 </html>
