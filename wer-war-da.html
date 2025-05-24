@@ -78,6 +78,18 @@
 <!-- Besucherzähler-Skript -->
 <script language="JavaScript" src="https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=kianized.de&start=0&design=6"></script>
 
+<!-- Desktop-Erkennung via URL-Parameter -->
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const from = params.get('from');
+
+  if (from === 'desktop') {
+    document.querySelector("h1").style.fontSize = "3vw";
+    const counterBox = document.querySelector(".counter-box");
+    counterBox.style.fontSize = "1.3vw";
+    counterBox.style.lineHeight = "1.4";
+  }
+</script>
+
 </body>
 </html>
-
