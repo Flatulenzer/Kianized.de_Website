@@ -3,112 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wer war da? – KIANIZED</title>
+  <title>Besucherzähler – KIANIZED</title>
+  <script data-goatcounter="https://kianized.goatcounter.com/count"
+          async src="https://gc.zgo.at/count.js"></script>
   <style>
     body {
       background-color: #000;
       color: #a678f0;
       font-family: 'Arial Black', sans-serif;
-      margin: 0;
-      padding: 4vh 5vw;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 8vw;
-      color: #a678f0;
-      margin-bottom: 4vh;
-    }
-
-    .country {
       display: flex;
+      justify-content: center;
       align-items: center;
-      margin: 1.2vh 0;
-      font-size: 5vw;
-    }
-
-    .flag {
-      margin-right: 2vw;
+      height: 100vh;
+      margin: 0;
       font-size: 6vw;
-    }
-
-    .bar {
-      flex: 1;
-      background-color: #a678f0;
-      height: 1.4vh;
-      margin-left: 2vw;
-      border-radius: 1vh;
-    }
-
-    .count {
-      margin-left: 2vw;
-      font-size: 4vw;
-    }
-
-    .info {
-      margin-top: 6vh;
-      font-size: 3.4vw;
-      opacity: 0.6;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <h1>Wer war da?</h1>
-  <div id="output">Lade Besucherdaten...</div>
-  <div class="info">
-    Datenquelle: <code>locations.json</code> via GoatCounter<br>
-    DSGVO-konform, ohne Cookies oder IP-Speicherung
-  </div>
-
-  <script>
-    const FLAGS = {
-      "DE": "🇩🇪",
-      "CH": "🇨🇭",
-      "AT": "🇦🇹",
-      "US": "🇺🇸",
-      "FR": "🇫🇷",
-      "IT": "🇮🇹",
-      "NL": "🇳🇱",
-      "PL": "🇵🇱",
-      "TR": "🇹🇷",
-      "ES": "🇪🇸"
-    };
-
-    fetch("https://kianized.goatcounter.com/api/v0/stats/locations.json")
-      .then(response => response.json())
-      .then(data => {
-        const container = document.getElementById("output");
-        container.innerHTML = "";
-
-        if (!data || !data.length) {
-          container.innerHTML = "<p>Keine Besucherdaten vorhanden.</p>";
-          return;
-        }
-
-        const max = Math.max(...data.map(d => d.count));
-
-        data.forEach(entry => {
-          const code = entry.location.toUpperCase();
-          const flag = FLAGS[code] || "🌍";
-
-          const row = document.createElement("div");
-          row.className = "country";
-
-          row.innerHTML = `
-            <span class="flag">${flag}</span>
-            <span>${code}</span>
-            <div class="bar" style="width: ${Math.round(entry.count / max * 60)}vw;"></div>
-            <span class="count">${entry.count}</span>
-          `;
-
-          container.appendChild(row);
-        });
-      })
-      .catch(err => {
-        document.getElementById("output").innerHTML =
-          "<p>Fehler beim Laden der Besucherdaten.</p>";
-        console.error("API-Fehler:", err);
-      });
-  </script>
+  Diese Seite wurde gezählt.
 </body>
 </html>
