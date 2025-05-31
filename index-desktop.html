@@ -5,82 +5,20 @@
 <title>KIANIZED</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    background-color: #000;
-    height: 100%;
-    overflow: hidden;
-    font-family: 'Arial Black', sans-serif;
-  }
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-    position: relative;
-  }
-  .kianized {
-    font-size: 10vw;
-    color: #7a42b3;
-    transform: scale(0.05);
-    opacity: 0;
-    position: relative;
-    z-index: 1;
-    animation: zoomIn 1.2s ease-out forwards;
-    cursor: default;
-    --x: 50%;
-    --y: 50%;
-  }
-  .kianized::before {
-    content: 'KIANIZED';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    color: #e2b8ff;
-    background: linear-gradient(90deg, transparent 40%, #e2b8ff 50%, transparent 60%);
-    background-size: 230% 100%;
-    background-repeat: no-repeat;
-    background-position: 100% center;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    opacity: 1;
-    z-index: 2;
-    pointer-events: none;
-    animation: pingpongWave 4s infinite linear;
-  }
-  .kianized.hovered::before {
-    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), #e2b8ff 15%, rgba(255,255,255,0) 40%);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    animation: none;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+  html, body { ... }
+  .container { ... }
+  .kianized { ... }
+  .kianized::before { ... }
+  .kianized.hovered::before { ... }
   @keyframes zoomIn { ... }
   @keyframes pingpongWave { ... }
   .loading, .else { ... }
-  .footer-top, .footer-bottom {
-    position: absolute;
-    bottom: 6vh;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    font-size: 0.9vw;
-    line-height: 1.8;
-    opacity: 0.6;
-    transition: transform 0.3s ease, color 0.3s ease;
-  }
-  .footer-bottom { bottom: 1vh; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 5vw; }
+  .footer-top, .footer-bottom { ... }
   .footer-top a, .footer-bottom a {
     color: #a678f0;
     text-decoration: none;
-    display: block;
     transition: transform 0.3s ease, color 0.3s ease;
+    display: block;
   }
   .footer-top a:hover, .footer-bottom a:hover {
     transform: scale(1.2);
@@ -90,50 +28,142 @@
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="kianized" id="kianized">KIANIZED</div>
-  <div class="loading" id="loadingText">Loading...</div>
-  <div class="else" id="elseText">„Wenn’s geil wird – umso besser.“</div>
-</div>
-<div class="footer-top">
-  <a href="philosophie.html" class="sound-link" data-sound="Cranky_Blipp.wav">Unsere Philosophie</a>
-  <a href="wer-war-da.html?from=desktop" class="sound-link" data-sound="Cranky_Blipp.wav">Wer war da?</a>
-</div>
-<div class="footer-bottom">
-  <a href="datenschutz.html" class="sound-link" data-sound="Cranky_Sci-Fi_Ring.wav">Datenschutz</a>
-  <a href="impressum.html" class="sound-link" data-sound="Cranky_Sci-Fi_Ring.wav">Impressum</a>
-</div>
+  <div class="container">
+    <div class="kianized" id="kianized">KIANIZED</div>
+    <div class="loading" id="loadingText">Loading...</div>
+    <div class="else" id="elseText">„Wenn’s geil wird – umso besser.“</div>
+  </div>
 
-<!-- Hintergrundsound -->
-<audio id="backgroundLoop" src="assets/Cranky_50Hz.wav" loop autoplay></audio>
+  <div class="footer-top">
+    <a href="philosophie.html" class="sound-link" data-sound="Cranky_Blipp.wav">Unsere Philosophie</a>
+    <a href="wer-war-da.html?from=desktop" class="sound-link" data-sound="Cranky_Blipp.wav">Wer war da?</a>
+  </div>
 
-<!-- Sound-Effekte für Buttons -->
-<audio id="soundPlayer" loop></audio>
+  <div class="footer-bottom">
+    <a href="datenschutz.html" class="sound-link" data-sound="Cranky_Sci-Fi_Ring.wav">Datenschutz</a>
+    <a href="impressum.html" class="sound-link" data-sound="Cranky_Sci-Fi_Ring.wav">Impressum</a>
+  </div>
 
-<script>
-  // Ladeanimation ausblenden
-  setTimeout(() => {
-    document.getElementById('loadingText').style.display = 'none';
-    document.getElementById('elseText').style.display = 'block';
-  }, 6000);
+  <!-- Hintergrundsound -->
+  <audio id="backgroundLoop" src="assets/Cranky_50Hz.wav" loop autoplay></audio>
 
-  // Spotlight-Effekt (wie gehabt)...
-  // Typo-Effekte (wie gehabt)...
+  <!-- Sound-Effekte für Buttons -->
+  <audio id="soundPlayer" loop></audio>
 
-  // Hover-Soundlogik
-  const soundPlayer = document.getElementById('soundPlayer');
-  document.querySelectorAll('.sound-link').forEach(link => {
-    link.addEventListener('mouseenter', () => {
-      const soundFile = link.getAttribute('data-sound');
-      soundPlayer.src = 'assets/' + soundFile;
-      soundPlayer.currentTime = 0;
-      soundPlayer.play();
+  <!-- Cookie-Banner -->
+  <div class="cookie-banner" id="cookieBanner">
+    Diese Website verwendet Cookies. Durch die Nutzung dieser Seite erklären Sie sich damit einverstanden.
+    <a href="datenschutz.html">Mehr erfahren</a>
+    <button onclick="acceptCookies()">OK</button>
+  </div>
+
+  <script>
+    // Ladeanimation ausblenden
+    setTimeout(() => {
+      document.getElementById('loadingText').style.display = 'none';
+      document.getElementById('elseText').style.display = 'block';
+    }, 6000);
+
+    const kianized = document.getElementById('kianized');
+    const elseText = document.getElementById('elseText');
+    const originalText = '„Wenn’s geil wird – umso besser.“';
+    const hoverText = '„Ist kein Laden. Es ist ein Zustand.“';
+
+    let morphInterval;
+    let currentText = originalText;
+
+    function typeMorph(from, to) {
+      clearInterval(morphInterval);
+      const maxLength = Math.max(from.length, to.length);
+      let index = 0;
+      morphInterval = setInterval(() => {
+        if (index <= maxLength) {
+          const left = to.substring(0, index);
+          const right = from.substring(index);
+          elseText.textContent = left + right;
+          index++;
+        } else {
+          currentText = to;
+          clearInterval(morphInterval);
+        }
+      }, 50);
+    }
+
+    function updateSpotlight(x, y) {
+      kianized.style.setProperty('--x', `${x}%`);
+      kianized.style.setProperty('--y', `${y}%`);
+    }
+
+    function enableSpotlight() {
+      kianized.classList.add('hovered');
+    }
+
+    function disableSpotlight() {
+      kianized.classList.remove('hovered');
+    }
+
+    kianized.addEventListener('mousemove', (e) => {
+      const rect = kianized.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      updateSpotlight(x, y);
+      enableSpotlight();
     });
-    link.addEventListener('mouseleave', () => {
-      soundPlayer.pause();
-      soundPlayer.currentTime = 0;
+
+    kianized.addEventListener('mouseleave', () => {
+      disableSpotlight();
+      if (currentText !== originalText) typeMorph(hoverText, originalText);
     });
-  });
-</script>
+
+    kianized.addEventListener('mouseenter', () => {
+      if (currentText !== hoverText) typeMorph(originalText, hoverText);
+    });
+
+    kianized.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const rect = kianized.getBoundingClientRect();
+        const x = ((touch.clientX - rect.left) / rect.width) * 100;
+        const y = ((touch.clientY - rect.top) / rect.height) * 100;
+        updateSpotlight(x, y);
+        enableSpotlight();
+      }
+    });
+
+    kianized.addEventListener('click', () => {
+      if (currentText === originalText) {
+        typeMorph(originalText, hoverText);
+      } else {
+        typeMorph(hoverText, originalText);
+      }
+    });
+
+    // Cookie-Banner Logik
+    function acceptCookies() {
+      localStorage.setItem('cookiesAccepted', 'true');
+      document.getElementById('cookieBanner').style.display = 'none';
+    }
+
+    window.addEventListener('load', () => {
+      if (!localStorage.getItem('cookiesAccepted')) {
+        document.getElementById('cookieBanner').style.display = 'block';
+      }
+    });
+
+    // Hover-Soundlogik
+    const soundPlayer = document.getElementById('soundPlayer');
+    document.querySelectorAll('.sound-link').forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        const soundFile = link.getAttribute('data-sound');
+        soundPlayer.src = 'assets/' + soundFile;
+        soundPlayer.currentTime = 0;
+        soundPlayer.play();
+      });
+      link.addEventListener('mouseleave', () => {
+        soundPlayer.pause();
+        soundPlayer.currentTime = 0;
+      });
+    });
+  </script>
 </body>
 </html>
