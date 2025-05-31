@@ -20,16 +20,16 @@
     display: block;
   }
 
-  /* Container für Inhalt mit etwas weniger Rand */
+  /* Container für Inhalt */
   .container {
-    margin: 0vh 10vw;
+    margin: 0 10vw;
+    text-align: center;
   }
 
   h1 {
     font-size: 2.5em;
     color: #c084fc;
     margin-bottom: 1.5rem;
-    text-align: center;
   }
 
   p {
@@ -59,7 +59,7 @@
     opacity: 0.75;
     transition: opacity 0.3s ease;
     text-decoration: none;
-    margin: 3rem 0; /* größerer Abstand oben/unten */
+    margin: 3rem 0;
   }
 
   .zurueck-button:hover {
@@ -74,7 +74,7 @@
 
   @media (max-width: 600px) {
     .container {
-      margin: 8vh 3vw;
+      margin: 0 3vw;
       font-size: 0.95em;
     }
 
@@ -85,7 +85,7 @@
     .zurueck-button {
       width: 2.8em;
       height: 2.8em;
-      margin: 2rem 0; /* auch mobil etwas Abstand */
+      margin: 2rem 0;
     }
 
     .zurueck-button svg {
@@ -97,12 +97,13 @@
 </head>
 <body>
 
-  <!-- Header-Bild über die volle Breite -->
+  <!-- Header-Bild -->
   <div class="header">
     <img src="assets/Kianized_Header.jpg" alt="KIANIZED Header" />
   </div>
 
-
+  <!-- Container mit dem eigentlichen Inhalt -->
+  <div class="container">
 
     <h1>KIANIZED – unsere Philosophie</h1>
 
@@ -130,9 +131,6 @@
     Ein Geistesblitz, ein bisschen Wahnsinn – und ein Kunstwort, das für sich selbst spricht.</p>
 
     <p><strong>Was repariert werden kann, wird repariert.</strong></p>
-
-    <!-- Container mit dem Zurück-Button und dem eigentlichen Inhalt -->
-    <div class="container">
 
     <!-- Zurück zur Startseite mit SVG-Pfeil -->
     <a href="index.html" class="zurueck-button" title="Zurück zur Startseite">
